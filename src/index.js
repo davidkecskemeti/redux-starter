@@ -1,17 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import configureStore from './store/configureStore';
+import {loadBugs, addBug, resolveBug, assignButToUser} from "./store/bugs";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const store = configureStore();
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+//UI layer
+store.dispatch(addBug({description: "a"}))
+store.dispatch(loadBugs())
+
+setTimeout(() => store.dispatch(resolveBug(1)), 2000)
+
+setTimeout(() => store.dispatch(assignButToUser(1, 4)), 4000)
